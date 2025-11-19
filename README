@@ -1,25 +1,12 @@
-1. UI Layer (Selenium/Playwright)
-   ├── User can enter prompts
-   ├── Response displays correctly
-   ├── Conversation flow works
-   ├── Settings are applied
-   ├── Error messages show properly
-   └── UI responsiveness
+🚀 LLM Test Automation Framework
 
-2. API Layer (requests/pytest)
-   ├── API endpoints respond correctly
-   ├── Request/response validation
-   ├── Authentication works
-   ├── Rate limiting handled
-   └── Error handling
+A Pytest-based framework for evaluating LLM behavior across quality, consistency, safety, hallucination, and performance.
 
-3. Model Layer (LLM Testing)
-   ├── Response quality
-   ├── Hallucination checks
-   ├── Consistency testing
-   └── Performance metrics
+This repository contains a modular automation framework focused on systematically validating Large Language Models using Python, Pytest, and semantic evaluation techniques.
 
+📁 Current Project Structure
 
+Since this version of the project only contains tests and utils, here is the accurate layout:
 
 llm_test_automation/
 ├── tests/
@@ -29,73 +16,75 @@ llm_test_automation/
 │   ├── test_hallucination.py
 │   ├── test_bias_safety.py
 │   └── test_performance.py
-├── utils/
-│   ├── llm_client.py              # Wrapper for LLM APIs
-│   ├── evaluator.py               # Response evaluation logic
-│   ├── metrics_calculator.py      # Similarity, scoring
-│   ├── golden_dataset_loader.py   # Test data management
-│   └── logger.py
-├── data/
-│   ├── golden_datasets/           # Known good input-output pairs
-│   ├── test_prompts.json
-│   ├── expected_outputs.json
-│   └── adversarial_cases.json
-├── config/
-│   ├── config.yaml                # Model configs, thresholds
-│   └── prompts_template.json
-├── reports/
-│   └── allure-results/
-├── conftest.py
-└── requirements.txt
+│
+└── utils/
+    ├── llm_client.py             # Unified wrapper for LLM API calls
+    ├── evaluator.py              # Scoring logic: factuality, coherence, structure
+    ├── metrics_calculator.py     # Semantic similarity metrics
+    └── logger.py                 # Central logging utilities
 
 
-*"Based on my experience with OpenAI APIs and understanding of LLM behavior, I would build a comprehensive pytest automation framework with these key components:*
+(More folders like data/, config/, or reports/ can be added later.)
 
-**1. Golden Dataset Testing:**
-- *Create curated input-output pairs for critical use cases*
-- *Use semantic similarity (sentence transformers) instead of exact matching*
-- *Set threshold-based assertions (e.g., 85% similarity = pass)*
+🧠 What This Framework Tests
+1️⃣ Response Quality
 
-**2. Consistency Testing:**
-- *Run same prompt multiple times*
-- *Measure variance using cosine similarity*
-- *Flag if outputs are too divergent*
+Coherence
 
-**3. Hallucination Detection:**
-- *Test against known facts*
-- *Validate outputs don't add information not in context*
-- *Check if model admits uncertainty for unknown queries*
+Completeness
 
-**4. Performance Metrics:**
-- *Track latency (P50, P95, P99)*
-- *Monitor token usage and costs*
-- *Test concurrent request handling*
+Instruction adherence
 
-**5. Safety & Bias:**
-- *Test for harmful content generation*
-- *Check for biased language*
-- *Validate refusal of inappropriate requests*
+2️⃣ Hallucination Detection
 
-**6. Integration with CI/CD:**
-- *Automated regression runs on model updates*
-- *Allure reporting for visual dashboards*
-- *Alert on metric degradation*
+Checks if LLM invents facts
 
-*I would use libraries like sentence-transformers for semantic similarity, pytest for test organization, and integrate with your existing CI/CD pipeline. The key is accepting non-determinism while still having robust quality gates."*
+Flags unsupported claims
 
----
+3️⃣ Consistency Testing
 
-## 🔧 **Tools You Should Mention**
-```
-Primary Stack:
-├── pytest (test framework)
-├── openai / anthropic (LLM APIs)
-├── sentence-transformers (semantic similarity)
-├── pytest-playwright (UI testing if needed)
-├── allure-pytest (reporting)
-└── pytest-xdist (parallel execution)
+Compares outputs across repeated runs
 
-Evaluation Libraries (mention you'd explore):
+Measures semantic drift
+
+4️⃣ Safety, Toxicity & Bias
+
+Ensures model refuses unsafe queries
+
+Detects biased or harmful content
+
+5️⃣ Performance & Cost
+
+Latency measurements
+
+Token usage
+
+Retry & timeout mechanisms
+
+⚙️ How to Run
+Install dependencies
+pip install -r requirements.txt
+
+Set API keys
+export OPENAI_API_KEY=YOUR_KEY
+
+Run tests
+pytest -q
+
+🛠️ Tech Used
+
+Python 3.10+
+
+Pytest
+
+Sentence Transformers (semantic similarity)
+
+OpenAI API / Anthropic API
+
+Allure (optional for reporting)
+
+
+Evaluation Libraries (to explore):
 ├── RAGAS (RAG evaluation)
 ├── LangChain (for LLM apps)
 ├── DeepEval (LLM evaluation framework)
